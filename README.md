@@ -63,7 +63,7 @@ Exchange Rate (USD to INR): 83.00
 You are free to use, modify, and distribute it as per the license terms.
 
 ## Author
-Developed by [Your Name].
+Developed by Suyash Vats.
 
 For questions or feedback, contact [suyashvats05@gmail.com](mailto:suyashvats05@gmail.com).
 
