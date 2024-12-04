@@ -1,363 +1,100 @@
-/* Global styles */
+/* General Styles */
 body {
+    background-color: #1f1f1f;
+    color: #fff;
+    font-family: Arial, sans-serif;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle, #5e548e 0%, #9f86c0 60%, #e0b1cb 100%);
-    color: #231942;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    transition: background-color 1s ease;
-}
-
-/* Container styles */
-.container {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 30px;
-    padding: 40px 25px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 450px;
-    backdrop-filter: blur(10px);
-    animation: fadeIn 1.2s ease-out forwards;
-}
-
-/* Title styles */
-.container h1 {
-    font-size: 2.4rem;
-    color: #9f86c0;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
-    font-weight: 700;
-    text-transform: uppercase;
-    animation: slideIn 0.8s ease-out 0.4s forwards;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Input styles */
-#stock-search {
-    width: calc(100% - 20px);
-    padding: 18px;
-    margin-bottom: 20px;
-    font-size: 1.3rem;
-    border: none;
-    border-radius: 40px;
-    outline: none;
-    color: #ffffff;
-    background: #231942;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transition: 0.3s ease;
-    animation: slideIn 0.8s ease-out 0.6s forwards;
-}
-
-#stock-search:focus {
-    background: #5e548e;
-    box-shadow: 0 0 15px rgba(94, 84, 142, 0.7);
-}
-
-/* Suggestions list styles */
-#suggestions {
-    list-style: none;
     padding: 0;
-    margin: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    max-height: 200px;
-    overflow-y: auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: slideInSuggestions 0.6s ease-out 0.8s forwards;
 }
 
-#suggestions li {
-    padding: 15px;
-    color: #231942;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transition: 0.3s ease;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-#suggestions li:hover {
-    background: #9f86c0;
-    transform: scale(1.05);
-}
-
-/* Stock information styles */
-#stock-info {
-    margin-top: 20px;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.1);
+.container {
+    display: flex;
+    min-height: 100vh;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeIn 1s ease-out 1s forwards;
+    box-sizing: border-box;
 }
 
-/* Stock Info Paragraph Styles */
-#stock-info p {
-    font-size: 1.2rem;
-    margin: 12px 0;
-    color: #231942;
+/* Left Section */
+.left-section {
+    width: 30%;
+    background-color: #2c2f33;
+    padding: 20px;
+    border-radius: 8px;
+    margin-right: 20px;
 }
 
-/* Highlight styles for stock information */
-#selected-stock {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #9f86c0;
+.left-section h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-#stock-price {
-    font-size: 1.3rem;
-    color: #231942;
+.left-section input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    background-color: #3b3e45;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: white;
 }
 
-#stock-change {
-    font-size: 1.2rem;
-    color: #ffffff;
-    font-weight: bold;
+.left-section ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-#last-updated {
-    font-size: 1rem;
-    color: #333333;
-    opacity: 0.8;
+.left-section li {
+    padding: 10px;
+    background-color: #3b3e45;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.left-section li:hover {
+    background-color: #4caf50;
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Right Section */
+.right-section {
+    width: 70%;
 }
 
-@keyframes slideInSuggestions {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.stock-info {
+    margin-bottom: 20px;
 }
 
-/* Loading Spinner */
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #9f86c0;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    margin: 20px auto;
+.stock-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.stock-info p {
+    font-size: 16px;
+    color: #ccc;
 }
 
-/* Background Animation */
-@keyframes bgAnimation {
-    0% {
-        background: radial-gradient(circle, #5e548e 0%, #9f86c0 60%, #e0b1cb 100%);
-    }
-    50% {
-        background: radial-gradient(circle, #e0b1cb 0%, #9f86c0 60%, #5e548e 100%);
-    }
-    100% {
-        background: radial-gradient(circle, #5e548e 0%, #9f86c0 60%, #e0b1cb 100%);
-    }
+.chart-container {
+    width: 100%;
+    height: 400px;
 }
 
-body {
-    animation: bgAnimation 10s ease infinite;
-}
-
-/* Media Queries for Responsiveness */
-
-/* For devices with width less than 600px (Mobile) */
-@media (max-width: 600px) {
-    .container {
-        padding: 20px 15px;
-        width: 90%;
-        max-width: 100%;
-    }
-
-    .container h1 {
-        font-size: 1.8rem;
-    }
-
-    #stock-search {
-        padding: 14px;
-        font-size: 1.1rem;
-    }
-
-    #suggestions li {
-        font-size: 1rem;
-    }
-
-    #stock-info p {
-        font-size: 1.1rem;
-    }
-
-    #selected-stock {
-        font-size: 1.2rem;
-    }
-
-    #stock-price {
-        font-size: 1.1rem;
-    }
-
-    #stock-change {
-        font-size: 1.1rem;
-    }
-
-    #last-updated {
-        font-size: 0.9rem;
-    }
-
-    .spinner {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-/* For devices with width between 600px and 768px (Tablet) */
-@media (min-width: 600px) and (max-width: 768px) {
-    .container {
-        padding: 30px 20px;
-        width: 85%;
-    }
-
-    .container h1 {
-        font-size: 2rem;
-    }
-
-    #stock-search {
-        padding: 16px;
-        font-size: 1.2rem;
-    }
-
-    #suggestions li {
-        font-size: 1.1rem;
-    }
-
-    #stock-info p {
-        font-size: 1.1rem;
-    }
-
-    #selected-stock {
-        font-size: 1.3rem;
-    }
-
-    #stock-price {
-        font-size: 1.2rem;
-    }
-
-    #stock-change {
-        font-size: 1.2rem;
-    }
-
-    #last-updated {
-        font-size: 1rem;
-    }
-
-    .spinner {
-        width: 45px;
-        height: 45px;
-    }
-}
-
-/* For devices larger than 768px (Desktop) */
-@media (min-width: 768px) {
-    .container {
-        padding: 40px 25px;
-        max-width: 450px;
-    }
-
-    .container h1 {
-        font-size: 2.4rem;
-    }
-
-    #stock-search {
-        padding: 18px;
-        font-size: 1.3rem;
-    }
-
-    #suggestions li {
-        font-size: 1.1rem;
-    }
-
-    #stock-info p {
-        font-size: 1.2rem;
-    }
-
-    #selected-stock {
-        font-size: 1.4rem;
-    }
-
-    #stock-price {
-        font-size: 1.3rem;
-    }
-
-    #stock-change {
-        font-size: 1.2rem;
-    }
-
-    #last-updated {
-        font-size: 1rem;
-    }
-
-    .spinner {
-        width: 50px;
-        height: 50px;
-    }
-}
-/* Graph Container */
-#stockChart {
-    max-width: 100%;
-    margin-top: 30px;
+canvas {
+    background-color: #2c2f33;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+#stock-chart {
+    width: 100%;  /* Ensure full width */
+    height: 400px; /* Define a height */
+    display: block; /* Avoid any inline-block issues */
+}
+.chart-container {
+    width: 100%;
+    height: 500px; /* Adjust the height to your preference */
 }
 
-/* Responsive layout adjustments */
-@media (max-width: 600px) {
-    #stockChart {
-        width: 100%;
-        height: auto;
-    }
-    .container {
-        padding: 20px;
-    }
+#stock-chart {
+    width: 100%;
+    height: 100%;
 }
+

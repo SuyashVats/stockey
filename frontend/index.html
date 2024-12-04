@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Price Checker</title>
+    <title>Stock Tracker</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script> <!-- GSAP CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+   
 </head>
 <body>
     <div class="container">
-        <h1>Stock Price Checker</h1>
-        <input 
-            type="text" 
-            id="stock-search" 
-            placeholder="Search for a stock (e.g., AAPL, GOOGL)" 
-            autocomplete="off" 
-        />
-        <ul id="suggestions"></ul>
-        <div id="stock-info">
-            <p id="selected-stock"></p>
-            <p id="stock-price"></p>
-            <p id="last-updated"></p>
+        <div class="left-section">
+            <h1>Stock Tracker</h1>
+            <input id="stock-search" type="text" placeholder="Search for stocks...">
+            <ul id="suggestions"></ul>
         </div>
-    
-        <!-- Stock Price Graph Container -->
         
+        <div class="right-section">
+            <div class="stock-info">
+                <h2 id="selected-stock">Select a stock to view details</h2>
+                <p id="stock-price"></p>
+                <p id="stock-change"></p>
+            </div>
+            <div class="chart-container">
+                <canvas id="stock-chart"></canvas>
+            </div>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

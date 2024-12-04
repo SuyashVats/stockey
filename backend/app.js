@@ -1,7 +1,8 @@
 const express = require('express');
 const yahooFinance = require('yahoo-finance2').default;
 const dotenv = require('dotenv');
-const path = require('path'); // Correctly import the path module
+const path = require('path');
+const cors = require('cors'); // Import the cors package
 
 dotenv.config();
 
@@ -10,6 +11,9 @@ const PORT = 4000;
 
 // Mock USD to INR conversion rate (replace with real-time API for dynamic rates)
 const usdToInrRate = 83.50;
+
+// Enable CORS
+app.use(cors());
 
 // Serve static files from the "frontend" folder
 app.use(express.static(path.resolve(__dirname, '../frontend')));
@@ -75,6 +79,31 @@ app.get('/stock/:symbol', async (req, res) => {
     } catch (error) {
         console.error('Error fetching stock price:', error);
         res.status(500).json({ error: 'Error fetching stock price.' });
+    }
+});
+
+
+const axios = require('axios');
+
+// Endpoint for fetching stock history
+app.get('/stock/history/:symbol', async (req, res) => {
+    const symbol = req.params.symbol.toUpperCase();
+    try {
+        const response = await axios.get(`https://query1.finance.yahoo.com/v7/finance/chart/${symbol}?range=1mo&interval=1d`);
+        const data = response.data;
+
+        const { timestamp, indicators } = data.chart.result[0];
+        const prices = indicators.quote[0].close;
+
+        const result = {
+            labels: timestamp.map((ts) => new Date(ts * 1000).toLocaleDateString()),
+            data: prices,
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching stock history:', error);
+        res.status(500).json({ error: 'Error fetching stock history' });
     }
 });
 
