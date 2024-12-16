@@ -2,7 +2,8 @@ const express = require('express');
 const yahooFinance = require('yahoo-finance2').default;
 const dotenv = require('dotenv');
 const path = require('path');
-const cors = require('cors'); // Import the cors package
+const cors = require('cors');
+const axios = require('axios');
 
 dotenv.config();
 
@@ -82,18 +83,59 @@ app.get('/stock/:symbol', async (req, res) => {
     }
 });
 
-
-const axios = require('axios');
-
 // Endpoint for fetching stock history
 app.get('/stock/history/:symbol', async (req, res) => {
-    const symbol = req.params.symbol.toUpperCase();
+    const symbol = req.params.symbol;
+    const range = req.query.range; // Example values: '1d', '5d', '1m', '1y', 'max'
+
+    console.log('Requested Symbol:', symbol);
+    console.log('Requested Range:', range); // Debugging the range parameter
+
+    let interval;
+    let rangeParam;
+
+    // Map the range to the correct interval and period for Yahoo Finance API
+    switch (range) {
+        case '1d':
+            interval = '1h'; // Hourly data for the last 24 hours
+            rangeParam = '1d';
+            break;
+        case '5d':
+            interval = '1d'; // Daily data for the last 5 days
+            rangeParam = '5d';
+            break;
+        case '1m':
+            interval = '1d'; // Daily data for the last month
+            rangeParam = '1mo';
+            break;
+        case '1y':
+            interval = '1wk'; // Weekly data for the last year
+            rangeParam = '1y';
+            break;
+        case 'max':
+            interval = '1wk'; // Weekly data for the maximum available data
+            rangeParam = 'max';
+            break;
+        default:
+            return res.status(400).json({ error: 'Invalid range.' });
+    }
+
     try {
-        const response = await axios.get(`https://query1.finance.yahoo.com/v7/finance/chart/${symbol}?range=1mo&interval=1d`);
+        const response = await axios.get(`https://query1.finance.yahoo.com/v7/finance/chart/${symbol}?range=${rangeParam}&interval=${interval}`);
         const data = response.data;
 
+        console.log('Yahoo Finance Data:', data); // Log the data returned from Yahoo
+
+        if (!data.chart || !data.chart.result || !data.chart.result[0]) {
+            return res.status(404).json({ error: 'Stock history not found.' });
+        }
+
         const { timestamp, indicators } = data.chart.result[0];
-        const prices = indicators.quote[0].close;
+        const prices = indicators?.quote[0]?.close;
+
+        if (!prices || prices.length === 0) {
+            return res.status(404).json({ error: 'No stock prices available for the given symbol.' });
+        }
 
         const result = {
             labels: timestamp.map((ts) => new Date(ts * 1000).toLocaleDateString()),
@@ -106,6 +148,7 @@ app.get('/stock/history/:symbol', async (req, res) => {
         res.status(500).json({ error: 'Error fetching stock history' });
     }
 });
+
 
 // Start server
 app.listen(PORT, () => {

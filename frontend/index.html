@@ -3,31 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tracker</title>
+    <meta name="description" content="Professional Stock Market Tracker - Real-time stock prices, charts, and analysis">
+    <title>Stockey Pro - Advanced Stock Market Analytics</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script> <!-- GSAP CDN -->
-   
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="left-section">
-            <h1>Stock Tracker</h1>
-            <input id="stock-search" type="text" placeholder="Search for stocks...">
-            <ul id="suggestions"></ul>
+            <h1><i class="fas fa-chart-line"></i> Stockey<span class="pro-badge">PRO</span></h1>
+            <div class="search-wrapper">
+                <input id="stock-search" type="text" placeholder="Search stocks..." 
+                       aria-label="Search stocks">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="watchlist-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-star"></i> Watchlist</h3>
+                    <button class="view-mode-toggle" id="view-mode-btn">
+                        <i class="fas fa-th-list"></i>
+                    </button>
+                </div>
+                <ul id="suggestions" class="stock-list"></ul>
+            </div>
         </div>
         
         <div class="right-section">
             <div class="stock-info">
-                <h2 id="selected-stock">Select a stock to view details</h2>
-                <p id="stock-price"></p>
-                <p id="stock-change"></p>
+                <div class="stock-header">
+                    <div class="stock-title">
+                        <h2 id="selected-stock">Select a stock to view details</h2>
+                        <span class="stock-exchange" id="stock-exchange"></span>
+                    </div>
+                    <div class="stock-actions">
+                        <button class="action-btn" id="share-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="action-btn" id="alert-btn">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="add-to-watchlist" id="watchlist-btn">
+                            <i class="far fa-star"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="stock-metrics">
+                    <div class="metric">
+                        <span id="stock-price" class="value">--</span>
+                        <span class="label">Current Price</span>
+                    </div>
+                    <div class="metric">
+                        <span id="stock-change" class="value">--</span>
+                        <span class="label">24h Change</span>
+                    </div>
+                    <div class="metric">
+                        <span id="market-cap" class="value">--</span>
+                        <span class="label">Market Cap</span>
+                    </div>
+                    <div class="metric">
+                        <span id="volume" class="value">--</span>
+                        <span class="label">Volume</span>
+                    </div>
+                </div>
+                
+                <div class="additional-metrics">
+                    <div class="metric-row">
+                        <div class="metric-item">
+                            <span class="label">Open</span>
+                            <span id="open-price" class="value">--</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="label">High</span>
+                            <span id="high-price" class="value">--</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="label">Low</span>
+                            <span id="low-price" class="value">--</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="label">Close</span>
+                            <span id="close-price" class="value">--</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
             <div class="chart-container">
-                <canvas id="stock-chart"></canvas>
+                <div class="chart-controls">
+                    <div class="chart-controls-left">
+                        <div class="time-ranges">
+                            <button class="time-range-btn active" data-range="1d">1D</button>
+                            <button class="time-range-btn" data-range="5d">5D</button>
+                            <button class="time-range-btn" data-range="1m">1M</button>
+                            <button class="time-range-btn" data-range="3m">3M</button>
+                            <button class="time-range-btn" data-range="6m">6M</button>
+                            <button class="time-range-btn" data-range="1y">1Y</button>
+                            <button class="time-range-btn" data-range="5y">5Y</button>
+                            <button class="time-range-btn" data-range="max">MAX</button>
+                        </div>
+                    </div>
+                    <div class="chart-controls-right">
+                        <div class="chart-type-selector">
+                            <button class="chart-type-btn active" data-type="line">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Line</span>
+                            </button>
+                            <button class="chart-type-btn" data-type="candlestick">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Candlestick</span>
+                            </button>
+                            <button class="chart-type-btn" data-type="area">
+                                <i class="fas fa-chart-area"></i>
+                                <span>Area</span>
+                            </button>
+                        </div>
+                        <div class="chart-indicators">
+                            <button class="indicator-btn" data-indicator="ma">MA</button>
+                            <button class="indicator-btn" data-indicator="ema">EMA</button>
+                            <button class="indicator-btn" data-indicator="rsi">RSI</button>
+                            <button class="indicator-btn" data-indicator="macd">MACD</button>
+                            <button class="indicator-btn" data-indicator="bb">BB</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-legend" id="chart-legend"></div>
+                <div id="stock-chart"></div>
+                <div class="chart-overlay loading-overlay hidden">
+                    <div class="loader"></div>
+                    <span>Loading market data...</span>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap"></script>
+    <script src="chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
